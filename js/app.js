@@ -328,7 +328,7 @@ const pagination = (() => {
         let tmp = button.innerHTML;
         button.disabled = true;
         button.innerHTML = `<span class="spinner-border spinner-border-sm me-1"></span>Loading...`;
-        await comment.ucapan();
+        // await comment.ucapan();
         document.getElementById('daftar-ucapan').scrollIntoView({ behavior: 'smooth' });
         button.disabled = false;
         button.innerHTML = tmp;
@@ -346,7 +346,7 @@ const pagination = (() => {
             resultData = 0;
             page.innerText = 1;
             next.classList.remove('disabled');
-            await comment.ucapan();
+            // await comment.ucapan();
             disabledPrevious();
         },
         setResultData: (len) => {
@@ -397,7 +397,7 @@ const session = (() => {
                 if (res.code == 200) {
                     localStorage.removeItem('token');
                     localStorage.setItem('token', res.data.token);
-                    comment.ucapan();
+                    // comment.ucapan();
                 }
             })
             .catch((err) => {
@@ -416,7 +416,7 @@ const session = (() => {
             if (jwt.exp < ((new Date()).getTime() / 1000) || !jwt.iss.includes((new URL(window.location.href)).host)) {
                 await login();
             } else {
-                await comment.ucapan();
+                // await comment.ucapan();
             }
         } else {
             await login();
@@ -720,32 +720,32 @@ const comment = (() => {
         return DIV;
     };
 
-    const ucapan = async () => {
-        const UCAPAN = document.getElementById('daftar-ucapan');
-        UCAPAN.innerHTML = renderLoading(pagination.getPer());
+    // const ucapan = async () => {
+    //     const UCAPAN = document.getElementById('daftar-ucapan');
+    //     UCAPAN.innerHTML = renderLoading(pagination.getPer());
 
-        let token = localStorage.getItem('token') ?? '';
-        if (token.length == 0) {
-            alert('Terdapat kesalahan, token kosong !');
-            window.location.reload();
-            return;
-        }
+    //     let token = localStorage.getItem('token') ?? '';
+    //     if (token.length == 0) {
+    //         alert('Terdapat kesalahan, token kosong !');
+    //         window.location.reload();
+    //         return;
+    //     }
 
-        await request('GET', `/api/comment?per=${pagination.getPer()}&next=${pagination.getNext()}`)
-            .token(token)
-            .then((res) => {
-                if (res.code == 200) {
-                    UCAPAN.innerHTML = null;
-                    res.data.forEach((data) => UCAPAN.appendChild(renderCard(data)));
-                    pagination.setResultData(res.data.length);
+    //     await request('GET', `/api/comment?per=${pagination.getPer()}&next=${pagination.getNext()}`)
+    //         .token(token)
+    //         .then((res) => {
+    //             if (res.code == 200) {
+    //                 UCAPAN.innerHTML = null;
+    //                 res.data.forEach((data) => UCAPAN.appendChild(renderCard(data)));
+    //                 pagination.setResultData(res.data.length);
 
-                    if (res.data.length == 0) {
-                        UCAPAN.innerHTML = `<div class="h6 text-center">Tidak ada data</div>`;
-                    }
-                }
-            })
-            .catch((err) => alert(`Terdapat kesalahan: ${err}`));
-    };
+    //                 if (res.data.length == 0) {
+    //                     UCAPAN.innerHTML = `<div class="h6 text-center">Tidak ada data</div>`;
+    //                 }
+    //             }
+    //         })
+    //         .catch((err) => alert(`Terdapat kesalahan: ${err}`));
+    // };
 
     const renderLoading = (num) => {
         let result = '';
@@ -825,7 +825,7 @@ const comment = (() => {
             });
 
         if (isSuccess) {
-            await ucapan();
+            // await ucapan();
             document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'center' });
             resetForm();
         }
@@ -884,7 +884,7 @@ const comment = (() => {
             });
 
         if (isSuccess) {
-            await ucapan();
+            // await ucapan();
             document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'center' });
             resetForm();
         }
@@ -993,7 +993,7 @@ const comment = (() => {
     };
 
     return {
-        ucapan,
+        // ucapan,
         renderLoading,
         balasan,
         hapus,
